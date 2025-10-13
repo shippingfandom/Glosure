@@ -181,12 +181,12 @@ Macro is a way to define your own syntax within Glosure.
 
 The syntax of defining a macro is as follows:
 ```clojure
-(defmacro NAME (OPT_ARG_1 OPT_ARG_2 OPT_ARG_N) (OPT_GENSYM_1 OPT_GENSYM_2 OPT_GENSYM_M) IMPLEMENTATION)
+(defmacro NAME (OPT_ARG_1 OPT_ARG_2 OPT_ARG_N) (!OPT_GENSYM_1 !OPT_GENSYM_2 !OPT_GENSYM_M) IMPLEMENTATION)
 ```
 Don't panic! It's simpler than it seems. Let's break it down:
 - `NAME` is, obviously, a name that your macro is going to be using, just like every builtin keyword has it's own name;
 - `OPT_ARG_N` are N arguments that are being taken by the macro. For example, `if` takes N = three arguments;
-- `OPT_GENSYM_M` are M symbols that going to be `gensym`ed. This is being used for hygienic macros, so if you're unsure what this is for, simply set no gensym symbols;
+- `!OPT_GENSYM_M` are M symbols that going to be `gensym`ed. This is being used for hygienic macros, so if you're unsure what this is for, simply set no gensym symbols;
 - `IMPLEMENTATION` is to what your macro is going to expand into!
 
 It still seems hard, I know, so let me just get you to the examples. The simplest macro you can write is this:
@@ -215,10 +215,10 @@ This one will allow us for `defun` keyword just like in other LISPs:
 
 And the last example is `swap`:
 ```clojure
-(defmacro swap (a b) (temp) (begin ;; Notice temp!
-  (def temp a)
+(defmacro swap (a b) (!temp) (begin ;; Notice !temp !
+  (def !temp a)
   (def a b)
-  (def b temp)))
+  (def b !temp)))
 ```
 Which allows you to swap two variables
 ```clojure
