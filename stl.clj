@@ -11,14 +11,14 @@
     initializer
     (if condition (loop body iterator condition)))))
 
-(defmacro foreach (key value collection body) (keys) ((lambda () 
-    (def keys (indexes collection))
-    (if keys (begin
+(defmacro foreach (key value collection body) (!keys) ((lambda () 
+    (def !keys (indexes collection))
+    (if !keys (begin
         (loop 
-            (def key (pull keys))
+            (def key (pull !keys))
             (def value (at collection key))
             body
-            keys)
+            !keys)
         value)))))
 
 (defmacro defalias (name keyword) () (defmacro name () () keyword))
